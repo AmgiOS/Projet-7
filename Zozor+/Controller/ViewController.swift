@@ -18,6 +18,17 @@ class ViewController: UIViewController {
     // MARK: - Properties
     var operations = Operations()
 
+    override func viewDidLoad() {
+
+    }
+    
+    func calculate() {
+        textView.text = textView.text + "=\(operations.calculateTotal())"
+    }
+    
+    func display() {
+        textView.text = operations.updateDisplay()
+    }
     // MARK: - Action
 
     @IBAction func tappedNumberButton(_ sender: UIButton) {
@@ -26,13 +37,14 @@ class ViewController: UIViewController {
                operations.addNewNumber(i)
             }
         }
+        display()
     }
 
     @IBAction func plus() {
         if operations.canAddOperator {
         	operations.operators.append("+")
         	operations.stringNumbers.append("")
-            operations.updateDisplay()
+            display()
         }
     }
 
@@ -40,19 +52,19 @@ class ViewController: UIViewController {
         if operations.canAddOperator {
             operations.operators.append("-")
             operations.stringNumbers.append("")
-            operations.updateDisplay()
+            display()
         }
     }
 
     @IBAction func equal() {
-        operations.calculateTotal()
+       calculate()
     }
 
     @IBAction func multiply() {
         if operations.canAddOperator {
             operations.operators.append("X")
             operations.stringNumbers.append("")
-            operations.updateDisplay()
+            display()
         }
     }
 
@@ -60,8 +72,7 @@ class ViewController: UIViewController {
         if operations.canAddOperator {
             operations.operators.append("/")
             operations.stringNumbers.append("")
-            operations.updateDisplay()
-        }
+         }
     }
     
     

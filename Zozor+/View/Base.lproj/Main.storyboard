@@ -71,7 +71,7 @@
                                                 <rect key="frame" x="0.0" y="162" width="70.5" height="44"/>
                                                 <color key="backgroundColor" red="0.40638002750000002" green="0.55148935320000003" blue="0.76473319529999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
-                                                <state key="normal" title="X">
+                                                <state key="normal" title="x">
                                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                                 <connections>
