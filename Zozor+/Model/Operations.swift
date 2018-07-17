@@ -8,24 +8,26 @@
 
 import UIKit
 
+protocol DisplayAlert {
+    func showAlert(title: String, message: String)
+}
+
 class Operations {
     // MARK: - Properties
     var stringNumbers: [String] = [String()]
     var operators: [String] = ["+"]
     var index = 0
+    var displayAlertDelegate: DisplayAlert?
     
     var isExpressionCorrect: Bool {
         if let stringNumber = stringNumbers.last {
-            if stringNumber.isEmpty {
+            if stringNumber.isEmpty || stringNumber == "0" {
                 if stringNumbers.count == 1 {
-                    let alertVC = UIAlertController(title: "Zéro!", message: "Démarrez un nouveau calcul !", preferredStyle: .alert)
-                            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-//                            self.present(alertVC, animated: true, completion: nil)
+                    displayAlertDelegate?.showAlert(title: "Zéro!", message: "Démarrez un nouveau calcul !")
+                    clear()
                 } else {
-                    let alertVC = UIAlertController(title: "Zéro!", message: "Entrez une expression correcte !", preferredStyle: .alert)
-                        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-                    alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-//                    self.present(alertVC, animated: true, completion: nil)
+                    displayAlertDelegate?.showAlert(title: "Zéro!", message: "Entrez une expression correcte !")
+                    clear()
                 }
                 return false
             }
@@ -36,9 +38,7 @@ class Operations {
     var canAddOperator: Bool {
         if let stringNumber = stringNumbers.last {
             if stringNumber.isEmpty {
-                let alertVC = UIAlertController(title: "Zéro!", message: "Expression incorrecte!", preferredStyle: .alert)
-                    alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-//                self.present(alertVC, animated: true, completion: nil)
+                displayAlertDelegate?.showAlert(title: "Zéro!", message: "Expression incorrecte!")
                 return false
             }
         }
@@ -46,6 +46,39 @@ class Operations {
     }
     
     // MARK: - Methods
+    
+    func plus() -> String {
+        if canAddOperator {
+            operators.append("+")
+            stringNumbers.append("")
+        }
+        return updateDisplay()
+    }
+    
+    func minus() -> String {
+        if canAddOperator {
+            operators.append("-")
+            stringNumbers.append("")
+        }
+        return updateDisplay()
+    }
+    
+    func multiply() -> String {
+        if canAddOperator {
+            operators.append("X")
+            stringNumbers.append("")
+        }
+        return updateDisplay()
+    }
+    
+    func diviser() -> String {
+        if canAddOperator {
+            operators.append("/")
+            stringNumbers.append("")
+        }
+        return updateDisplay()
+    }
+        
     
     func addNewNumber(_ newNumber: Int) {
         if let stringNumber = stringNumbers.last {
@@ -55,10 +88,10 @@ class Operations {
         }
     }
     
-    func calculateTotal() -> Int {
+    func calculateTotal() -> String {
         var total = 0
         if !isExpressionCorrect{
-            return 0
+            return "0"
         }
         for (i, stringNumber) in stringNumbers.enumerated() {
             if let number = Int(stringNumber) {
@@ -74,7 +107,7 @@ class Operations {
             }
         }
         clear()
-        return total
+        return String(total)
     }
     
     func updateDisplay() -> String {
@@ -90,10 +123,9 @@ class Operations {
         return text
     }
     
-    func clear() {
+    private func clear() {
         stringNumbers = [String()]
         operators = ["+"]
         index = 0
     }
-    
 }

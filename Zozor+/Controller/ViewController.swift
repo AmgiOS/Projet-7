@@ -19,16 +19,9 @@ class ViewController: UIViewController {
     var operations = Operations()
 
     override func viewDidLoad() {
+        operations.displayAlertDelegate = self
+    }
 
-    }
-    
-    func calculate() {
-        textView.text = textView.text + "=\(operations.calculateTotal())"
-    }
-    
-    func display() {
-        textView.text = operations.updateDisplay()
-    }
     // MARK: - Action
 
     @IBAction func tappedNumberButton(_ sender: UIButton) {
@@ -37,43 +30,34 @@ class ViewController: UIViewController {
                operations.addNewNumber(i)
             }
         }
-        display()
+        textView.text = operations.updateDisplay()
     }
 
     @IBAction func plus() {
-        if operations.canAddOperator {
-        	operations.operators.append("+")
-        	operations.stringNumbers.append("")
-            display()
-        }
+        textView.text = operations.plus()
     }
 
     @IBAction func minus() {
-        if operations.canAddOperator {
-            operations.operators.append("-")
-            operations.stringNumbers.append("")
-            display()
-        }
+       textView.text = operations.minus()
     }
 
     @IBAction func equal() {
-       calculate()
+       textView.text = operations.calculateTotal()
     }
 
     @IBAction func multiply() {
-        if operations.canAddOperator {
-            operations.operators.append("X")
-            operations.stringNumbers.append("")
-            display()
-        }
+        textView.text = operations.multiply()
     }
 
     @IBAction func diviser() {
-        if operations.canAddOperator {
-            operations.operators.append("/")
-            operations.stringNumbers.append("")
-         }
+        textView.text = operations.diviser()
     }
-    
-    
+}
+
+extension ViewController: DisplayAlert {
+    func showAlert(title: String, message: String) {
+        let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        self.present(alertVC, animated: true, completion: nil)
+    }
 }

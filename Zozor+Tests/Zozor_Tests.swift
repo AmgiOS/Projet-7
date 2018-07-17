@@ -10,10 +10,63 @@ import XCTest
 @testable import CountOnMe
 
 class Zozor_Tests: XCTestCase {
+    var operations: Operations!
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        operations = Operations()
+    }
+    
+    func testGivenArrayStringIsEmpty_WhenCheckIfString_ThenCanAddOperator() {
+        operations.stringNumbers = [""]
+        
+        XCTAssertFalse(operations.canAddOperator)
+    }
+    
+    func testGivenArrayStringIsEmpty_WhenCheckBoolExpression_ThenAddString() {
+        operations.stringNumbers = ["1"]
+        
+        XCTAssertTrue(operations.isExpressionCorrect)
+    }
+    
+    func testGivenAddNumber_WhenAddOperatorPlus_ThenCalculateTotal() {
+        operations.addNewNumber(1)
+        
+        _ = operations.plus()
+        
+        operations.addNewNumber(2)
+        
+        XCTAssert(operations.calculateTotal() == "3")
+    }
+    
+    func testGivenAddNumber_WhenAddOperatorMultiply_ThenCalculateTotal() {
+        operations.addNewNumber(5)
+        
+        _ = operations.multiply()
+        
+        operations.addNewNumber(3)
+        
+        XCTAssert(operations.calculateTotal() == "15")
+    }
+    
+    func testGivenAddNumber_WhenAddOperatorDiviser_ThenCalculateTotal() {
+        operations.addNewNumber(10)
+        
+        _ = operations.diviser()
+        
+        operations.addNewNumber(5)
+        
+        XCTAssert(operations.calculateTotal() == "2")
+    }
+    
+    func testGivenAddNumber_WhenAddOperatorMinus_ThenCalculateTotal() {
+        operations.addNewNumber(15)
+        
+        _ = operations.minus()
+        
+        operations.addNewNumber(5)
+        
+        XCTAssert(operations.calculateTotal() == "10")
     }
     
     override func tearDown() {
@@ -24,13 +77,6 @@ class Zozor_Tests: XCTestCase {
     func testExample() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
     }
     
 }
