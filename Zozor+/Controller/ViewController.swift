@@ -33,24 +33,29 @@ class ViewController: UIViewController {
         textView.text = operations.updateDisplay()
     }
 
-    @IBAction func plus() {
-        textView.text = operations.plus()
+    @IBAction func tappedOperator(_ sender: UIButton) {
+        switch sender.tag {
+        case 0:
+            textView.text = operations.multiply()
+        case 1:
+            textView.text = operations.diviser()
+        case 2:
+            textView.text = operations.plus()
+        case 3:
+            textView.text = operations.minus()
+        case 4:
+            textView.text = operations.calculateTotal()
+        default:
+            break
+        }
     }
-
-    @IBAction func minus() {
-       textView.text = operations.minus()
-    }
-
-    @IBAction func equal() {
-       textView.text = operations.calculateTotal()
-    }
-
-    @IBAction func multiply() {
-        textView.text = operations.multiply()
-    }
-
-    @IBAction func diviser() {
-        textView.text = operations.diviser()
+    
+    func convert() {
+        if let cost = Double(textView.text!) {
+            print("Result in Double is \(cost)")
+        } else {
+            print("Not a valid number: \(textView.text!)")
+        }
     }
 }
 

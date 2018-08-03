@@ -89,13 +89,13 @@ class Operations {
     }
     
     func calculateTotal() -> String {
-        var total = 0
         if !isExpressionCorrect {
             return "0"
         }
         priorityCalcul()
+        var total = Double()
         for (i, stringNumber) in stringNumbers.enumerated() {
-            if let number = Int(stringNumber) {
+            if let number = Double(stringNumber) {
                 if operators[i] == "+" {
                     total += number
                 } else if operators[i] == "-" {
@@ -103,11 +103,12 @@ class Operations {
                 }
             }
         }
+        let result = String(format: "%.0f", total)
         clear()
-        return String(total)
+        return String(result)
     }
     
-    func priorityCalcul() {
+    private func priorityCalcul() {
         var result = 0
         let priorityOperators = "x/"
         for (index, stringNumber) in stringNumbers.enumerated().reversed() {

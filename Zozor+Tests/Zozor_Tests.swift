@@ -29,10 +29,6 @@ class Zozor_Tests: XCTestCase {
         XCTAssertTrue(operations.isExpressionCorrect)
     }
     
-    func testGiven() {
-        
-    }
-    
     func testGivenAddNumber_WhenCalculateDiviserFor0_ThenResultTotal() {
         operations.addNewNumber(3)
         
