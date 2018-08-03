@@ -19,9 +19,10 @@ class Operations {
     var index = 0
     var displayAlertDelegate: DisplayAlert?
     
+    
     var isExpressionCorrect: Bool {
         if let stringNumber = stringNumbers.last {
-            if stringNumber.isEmpty || stringNumber == "0" {
+            if stringNumber.isEmpty {
                 if stringNumbers.count == 1 {
                     displayAlertDelegate?.showAlert(title: "Zéro!", message: "Démarrez un nouveau calcul !")
                     clear()
@@ -46,7 +47,6 @@ class Operations {
     }
     
     // MARK: - Methods
-    
     func plus() -> String {
         if canAddOperator {
             operators.append("+")
@@ -65,7 +65,7 @@ class Operations {
     
     func multiply() -> String {
         if canAddOperator {
-            operators.append("X")
+            operators.append("x")
             stringNumbers.append("")
         }
         return updateDisplay()
@@ -90,24 +90,49 @@ class Operations {
     
     func calculateTotal() -> String {
         var total = 0
-        if !isExpressionCorrect{
+        if !isExpressionCorrect {
             return "0"
         }
+        priorityCalcul()
         for (i, stringNumber) in stringNumbers.enumerated() {
             if let number = Int(stringNumber) {
                 if operators[i] == "+" {
                     total += number
                 } else if operators[i] == "-" {
                     total -= number
-                } else if operators[i] == "X" {
-                    total *= number
-                } else if operators[i] == "/" {
-                    total /= number
                 }
             }
         }
         clear()
         return String(total)
+    }
+    
+    func priorityCalcul() {
+        var result = 0
+        let priorityOperators = "x/"
+        for (index, stringNumber) in stringNumbers.enumerated().reversed() {
+            if let number = Int(stringNumber) {
+                if priorityOperators.contains(operators[index]) {
+                    if let currentNumber = Int(stringNumbers[index-1]) {
+                        switch operators[index] {
+                        case "x" :
+                            result = Int(currentNumber * number)
+                        case "/" :
+                            if number == 0 {
+                                displayAlertDelegate?.showAlert(title: "Error", message: "Erreur calcul")
+                            } else {
+                                result = Int(currentNumber / number)
+                            }
+                        default :
+                            break
+                        }
+                        stringNumbers[index-1] = String(result)
+                        stringNumbers.remove(at: index)
+                        operators.remove(at: index)
+                    }
+                }
+            }
+        }
     }
     
     func updateDisplay() -> String {

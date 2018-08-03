@@ -24,9 +24,39 @@ class Zozor_Tests: XCTestCase {
     }
     
     func testGivenArrayStringIsEmpty_WhenCheckBoolExpression_ThenAddString() {
-        operations.stringNumbers = ["1"]
+        operations.addNewNumber(1)
         
         XCTAssertTrue(operations.isExpressionCorrect)
+    }
+    
+    func testGiven() {
+        
+    }
+    
+    func testGivenAddNumber_WhenCalculateDiviserFor0_ThenResultTotal() {
+        operations.addNewNumber(3)
+        
+        _ = operations.diviser()
+        
+        operations.addNewNumber(0)
+        
+        XCTAssertTrue(operations.calculateTotal() == "0")
+    }
+    
+    func testIsExpressionCorrect_WhenExpressionTappedIsNotCorrect_ThenExpressionReturnFalse() {
+        operations.addNewNumber(1)
+        
+        _ = operations.plus()
+        
+        _ = operations.calculateTotal()
+        
+        XCTAssertFalse(operations.isExpressionCorrect)
+    }
+    
+    func testIsExpressionCorrect_WhenStringNumberContainNothing_ThenExpressionReturnFalse() {
+        _ = operations.plus()
+        
+        XCTAssertFalse(operations.isExpressionCorrect)
     }
     
     func testGivenAddNumber_WhenAddOperatorPlus_ThenCalculateTotal() {
