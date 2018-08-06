@@ -36,7 +36,7 @@ class Zozor_Tests: XCTestCase {
         
         operations.addNewNumber(0)
         
-        XCTAssertTrue(operations.calculateTotal() == "0")
+        XCTAssertTrue(operations.calculateTotal() == "0.00")
     }
     
     func testIsExpressionCorrect_WhenExpressionTappedIsNotCorrect_ThenExpressionReturnFalse() {
@@ -62,7 +62,7 @@ class Zozor_Tests: XCTestCase {
         
         operations.addNewNumber(2)
         
-        XCTAssert(operations.calculateTotal() == "3")
+        XCTAssert(operations.calculateTotal() == "3.00")
     }
     
     func testGivenAddNumber_WhenAddOperatorMultiply_ThenCalculateTotal() {
@@ -72,7 +72,7 @@ class Zozor_Tests: XCTestCase {
         
         operations.addNewNumber(3)
         
-        XCTAssert(operations.calculateTotal() == "15")
+        XCTAssert(operations.calculateTotal() == "15.00")
     }
     
     func testGivenAddNumber_WhenAddOperatorDiviser_ThenCalculateTotal() {
@@ -82,7 +82,7 @@ class Zozor_Tests: XCTestCase {
         
         operations.addNewNumber(5)
         
-        XCTAssert(operations.calculateTotal() == "2")
+        XCTAssert(operations.calculateTotal() == "2.00")
     }
     
     func testGivenAddNumber_WhenAddOperatorMinus_ThenCalculateTotal() {
@@ -92,6 +92,6 @@ class Zozor_Tests: XCTestCase {
         
         operations.addNewNumber(5)
         
-        XCTAssert(operations.calculateTotal() == "10")
+        XCTAssert(operations.calculateTotal() == "10.00")
     }
 }

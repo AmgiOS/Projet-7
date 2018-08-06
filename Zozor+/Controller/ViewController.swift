@@ -34,31 +34,22 @@ class ViewController: UIViewController {
     }
 
     @IBAction func tappedOperator(_ sender: UIButton) {
-        switch sender.tag {
-        case 0:
+        switch sender.title(for: .normal) {
+        case "x":
             textView.text = operations.multiply()
-        case 1:
+        case "/":
             textView.text = operations.diviser()
-        case 2:
+        case "+":
             textView.text = operations.plus()
-        case 3:
+        case "-":
             textView.text = operations.minus()
-        case 4:
+        case "=":
             textView.text = operations.calculateTotal()
         default:
             break
         }
     }
-    
-    func convert() {
-        if let cost = Double(textView.text!) {
-            print("Result in Double is \(cost)")
-        } else {
-            print("Not a valid number: \(textView.text!)")
-        }
-    }
 }
-
 extension ViewController: DisplayAlert {
     func showAlert(title: String, message: String) {
         let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)

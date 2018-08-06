@@ -19,7 +19,7 @@ class Operations {
     var index = 0
     var displayAlertDelegate: DisplayAlert?
     
-    
+    //Check if stringNumber contains number else display error
     var isExpressionCorrect: Bool {
         if let stringNumber = stringNumbers.last {
             if stringNumber.isEmpty {
@@ -36,6 +36,7 @@ class Operations {
         return true
     }
     
+    // can add operator if contains numbers
     var canAddOperator: Bool {
         if let stringNumber = stringNumbers.last {
             if stringNumber.isEmpty {
@@ -79,7 +80,7 @@ class Operations {
         return updateDisplay()
     }
         
-    
+    //Add number in textView
     func addNewNumber(_ newNumber: Int) {
         if let stringNumber = stringNumbers.last {
             var stringNumberMutable = stringNumber
@@ -88,12 +89,13 @@ class Operations {
         }
     }
     
+    //Calculate result total
     func calculateTotal() -> String {
         if !isExpressionCorrect {
             return "0"
         }
         priorityCalcul()
-        var total = Double()
+        var total: Double = 0
         for (i, stringNumber) in stringNumbers.enumerated() {
             if let number = Double(stringNumber) {
                 if operators[i] == "+" {
@@ -103,29 +105,28 @@ class Operations {
                 }
             }
         }
-        let result = String(format: "%.0f", total)
+        let result = String(format: "%.2f", total)
         clear()
         return String(result)
     }
     
+    //Check if calcul contains multiply or diviser for priority calcul
     private func priorityCalcul() {
-        var result = 0
+        var result: Double = 0
         let priorityOperators = "x/"
         for (index, stringNumber) in stringNumbers.enumerated().reversed() {
-            if let number = Int(stringNumber) {
+            if let number = Double(stringNumber) {
                 if priorityOperators.contains(operators[index]) {
-                    if let currentNumber = Int(stringNumbers[index-1]) {
-                        switch operators[index] {
-                        case "x" :
-                            result = Int(currentNumber * number)
-                        case "/" :
+                    if let currentNumber = Double(stringNumbers[index-1]) {
+                        
+                        if operators[index] == "x"{
+                            result = Double(currentNumber * number)
+                        } else if operators[index] == "/" {
                             if number == 0 {
                                 displayAlertDelegate?.showAlert(title: "Error", message: "Erreur calcul")
                             } else {
-                                result = Int(currentNumber / number)
+                                result = Double(currentNumber / number)
                             }
-                        default :
-                            break
                         }
                         stringNumbers[index-1] = String(result)
                         stringNumbers.remove(at: index)
@@ -136,6 +137,7 @@ class Operations {
         }
     }
     
+    //Update Display TextView
     func updateDisplay() -> String {
         var text = ""
         for (i, stringNumber) in stringNumbers.enumerated() {
@@ -148,7 +150,7 @@ class Operations {
         }
         return text
     }
-    
+
     private func clear() {
         stringNumbers = [String()]
         operators = ["+"]
