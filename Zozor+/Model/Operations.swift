@@ -112,27 +112,27 @@ class Operations {
     
     //Check if calcul contains multiply or diviser for priority calcul
     private func priorityCalcul() {
+        let priorityOperators = ["x", "/"]
+        var i = 0
         var result: Double = 0
-        let priorityOperators = "x/"
-        for (index, stringNumber) in stringNumbers.enumerated().reversed() {
-            if let number = Double(stringNumber) {
-                if priorityOperators.contains(operators[index]) {
-                    if let currentNumber = Double(stringNumbers[index-1]) {
-                        
-                        if operators[index] == "x"{
-                            result = Double(currentNumber * number)
-                        } else if operators[index] == "/" {
-                            if number == 0 {
-                                displayAlertDelegate?.showAlert(title: "Error", message: "Erreur calcul")
-                            } else {
-                                result = Double(currentNumber / number)
-                            }
+        
+        while i < stringNumbers.count - 1 {
+            if var firstNumber = Double(stringNumbers[i]) {
+                while priorityOperators.contains(operators[i + 1]) {
+                    if let secondNumber = Double(stringNumbers[i + 1]) {
+                        if operators[i + 1] == "x" {
+                            result = firstNumber * secondNumber
+                        } else if operators[i + 1] == "/" {
+                            result = firstNumber / secondNumber
                         }
-                        stringNumbers[index-1] = String(result)
-                        stringNumbers.remove(at: index)
-                        operators.remove(at: index)
+                        stringNumbers[i] = String(result)
+                        firstNumber = result
+                        stringNumbers.remove(at: i + 1)
+                        operators.remove(at: i + 1)
+                        if i == stringNumbers.count - 1 { return }
                     }
                 }
+                i += 1
             }
         }
     }
